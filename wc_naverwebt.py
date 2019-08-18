@@ -11,22 +11,23 @@ import webbrowser
 import requests
 from bs4 import BeautifulSoup
 
-url = 'https://comic.naver.com/webtoon/list.nhn?titleId=20853&weekday=tue&page='
-pagenum = 0
+maxpage = 119
+file = open('wtoons.html', 'w')
 
-while True:
-    pagenum += 1
-    url = url + str(pagenum)
+for pagenum in range(1, maxpage + 1):
+    url = 'https://comic.naver.com/webtoon/list.nhn?titleId=20853&weekday=tue&page=' + str(pagenum)
     resp = requests.get(url)
-    if resp.status_code != 200:
-        break
+    print(pagenum, "페이지 로딩 중")
 
     soup = BeautifulSoup(resp.text, 'html.parser')
     wtoon = soup.find('table', {'class':'viewList'})
     wtoon_title = wtoon.find_all('td', {'class':'title'})
 
-    html = ''
     for one in wtoon_title:
         linkURL = 'https://comic.naver.com/' + one.a['href']
-        linkText = '<a href = "%s">%s</a>' % (linkURL, one.text.strip())
-        print(linkText + "<br>")
+        titleText = one.text.strip()
+        linkText = '<a href = "%s">%s</a>' % (linkURL, titleText)
+        file.write(linkText + '<br>')
+file.close()
+
+webbrowser.open('wtoons.html')
