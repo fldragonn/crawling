@@ -7,4 +7,26 @@
 
 # https://comic.naver.com/webtoon/list.nhn?titleId=20853&weekday=tue&page=2
 
-url = 'https://comic.naver.com/webtoon/list.nhn?titleId=20853&weekday=tue'
+import webbrowser
+import requests
+from bs4 import BeautifulSoup
+
+url = 'https://comic.naver.com/webtoon/list.nhn?titleId=20853&weekday=tue&page='
+pagenum = 0
+
+while True:
+    pagenum += 1
+    url = url + str(pagenum)
+    resp = requests.get(url)
+    if resp.status_code != 200:
+        break
+
+    soup = BeautifulSoup(resp.text, 'html.parser')
+    wtoon = soup.find('table', {'class':'viewList'})
+    wtoon_title = wtoon.find_all('td', {'class':'title'})
+
+    html = ''
+    for one in wtoon_title:
+        linkURL = 'https://comic.naver.com/' + one.a['href']
+        linkText = '<a href = "%s">%s</a>' % (linkURL, one.text.strip())
+        print(linkText + "<br>")
