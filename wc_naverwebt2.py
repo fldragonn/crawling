@@ -11,10 +11,12 @@ import webbrowser
 import requests
 from bs4 import BeautifulSoup
 
-maxpage = 119
 file = open('wtoons.html', 'w')
 
-for pagenum in range(1, maxpage + 1):
+pagenum = 0
+wtoon_check = []
+while True:
+    pagenum += 1
     url = 'https://comic.naver.com/webtoon/list.nhn?titleId=20853&weekday=tue&page=' + str(pagenum)
     resp = requests.get(url)
     print(pagenum, "페이지 로딩 중")
@@ -22,6 +24,12 @@ for pagenum in range(1, maxpage + 1):
     soup = BeautifulSoup(resp.text, 'html.parser')
     wtoon = soup.find('table', {'class':'viewList'})
     wtoon_title = wtoon.find_all('td', {'class':'title'})
+
+    chk_title = wtoon_title[0].text.strip()
+    # print(chk_title, wtoon_check)
+    if chk_title in wtoon_check:
+        break
+    wtoon_check.append(chk_title)
 
     for one in wtoon_title:
         linkURL = 'https://comic.naver.com/' + one.a['href']
