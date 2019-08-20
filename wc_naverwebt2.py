@@ -1,7 +1,7 @@
 # wc_nmovie.py
 
-# 파이썬으로 누구나 크롤링 하기 06
-# 네이버 웹툰 크롤링
+# 파이썬으로 누구나 크롤링 하기 07
+# 네이버 웹툰 크롤링 첫화부터 끝화까지
 # 평촌 아이티 컴퓨터 www.pitca.co.kr
 # 작성자: 전대룡
 
@@ -39,3 +39,4 @@ while True:
 file.close()
 
 webbrowser.open('wtoons.html')
+
