@@ -9,6 +9,7 @@
 + 네이버 영화 순위 페이지 크롤링 하기 wc_navermovie.py
 + 일자별 네이버 영화 순위 크롤링 하여 웹 페이지 만들기 wc_nmovie.py
 + 네이버 웹툰 크롤링 wc_naverwebt.py
++ 네이버 웹툰 크롤링: 최근화부터 첫화까지 wc_naverwebt2.py
 
 ## 목표
 
